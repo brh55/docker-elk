@@ -37,6 +37,15 @@ services:
     depends_on:
       - elasticsearch
 
+  logstash_http:
+    links:
+      - logstash
+    entrypoint: logstash
+    command:
+      - -e
+      - "input { http { port => 9601 } } output { stdout { codec => rubydebug} }"
+
+
   kibana:
     build: kibana/
     volumes:
